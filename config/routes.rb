@@ -1,14 +1,9 @@
 Rails.application.routes.draw do
   get 'home', to: 'static#home'
+    resources :orders
+    resources :invoices
 
-  resources :orders
-  resources :invoices
-
-  get "/inventory", to: "products#inventory"
-  get "/description", to: "products#description"
-
-  resources :products do
-    get "/inventory", to: "products#inventory"
-    get "/description", to: "products#description"
-  end
+    get 'products/inventory/:id', to: 'products#inventory'
+    get 'products/description/:id', to: 'products#description', as: 'description'
+    resources :products, only: [:new,:create,:index]
 end
